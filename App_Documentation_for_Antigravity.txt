@@ -1,0 +1,86 @@
+LingoVault - Full App Documentation
+
+1. App Overview
+LingoVault is an offline-first language learning app focused on:
+- Spaced repetition (SRS)
+- Sentence building
+- Translation practice
+- Grammar-based learning
+- Streak & XP progression
+
+Core Philosophy:
+- Hybrid Architecture: Firebase for User Data, Offline for Content.
+- Firebase Authentication and Cloud Firestore handle all user data and progress tracking.
+- Hardcoded language content (vocabulary, grammar, templates) - completely offline.
+- Lightweight, fast, and deterministic behavior.
+
+2. System Architecture
+2.1 High-Level Structure
+- UI Layer
+- Business Logic Layer
+- Local Database (SQLite)
+- Static Content (hardcoded JSON / constants)
+
+2.2 Data Sources
+- User Auth & Data: Firebase
+- Progress tracking: Firebase Cloud Firestore
+- Vocabulary: Hardcoded
+- Grammar rules: Hardcoded
+- Sentence templates: Hardcoded
+
+3. Database Design (Firebase Cloud Firestore)
+Use the provided schema exactly, but as Firestore collections.
+3.1 users: Stores user identity via Firebase Authentication (Email/Password).
+3.2 srs_cards: Tracks spaced repetition state (ease_factor, interval_days, repetitions, next_review_at).
+3.3 quiz_sessions: Tracks learning sessions (SRS review, sentence builder, translation).
+3.4 builder_attempts: Tracks sentence construction attempts.
+3.5 translation_attempts: Tracks translation exercises.
+3.6 streak_tracking: Tracks daily engagement.
+3.7 user_word_progress: Tracks mastery level of each word.
+
+4. Static (Hardcoded) Data
+These are NOT stored in the database.
+4.1 Vocabulary: Stored as JSON or constants (word_id, word, translation, language_code, etc.).
+4.2 Grammar Rules: Stored as JSON (rule_id, rule_name, pattern_template).
+4.3 Sentence Templates: Stored as JSON (template_id, rule_id, template_text).
+
+5. Core Features
+5.1 User System: Firebase Authentication Signup and Login (Email and Password).
+5.2 Streak System: Increments if used today; resets if a day is missed. Tracks current/longest streaks.
+5.3 XP System:
+- Correct SRS answer: +5 XP
+- Correct sentence: +10 XP
+- Perfect translation: +15 XP
+5.4 SRS Algorithm (SM-2): Adjusts interval_days and ease_factor based on correctness.
+5.5 Sentence Builder: Pick template -> Fill slots -> Compare answer.
+5.6 Translation Engine: Show sentence -> User translates -> Compare string match/fuzzy score.
+5.7 Word Mastery: Tracks mastery_level = min(5, times_correct / times_seen).
+
+6. App Flow
+- First Launch: Create user, initialize streak, load static data.
+- Daily Usage: Open app -> Update streak -> Dashboard -> Start session (SRS/Builder/Translation) -> Save progress & XP.
+
+7. Business Logic Rules
+- Session Creation: Each activity = one quiz_session.
+- Progress Updates: Update word progress, SRS cards, XP, and streak.
+
+8. UI Requirements
+- Screens: Splash/Login, Dashboard, SRS Screen, Sentence Builder, Translation Screen, Results Screen.
+
+9. Technical Constraints
+- Hybrid online/offline structure.
+- Use Firebase for all User Identity and Progress tables.
+- No dynamic admin APIs or content delivery servers (content must stay hardcoded without backend).
+
+10. Edge Cases
+- User skips day: Streak reset.
+- No due SRS cards: Fallback to new words.
+- Empty session: Prevent completion.
+
+11. Implementation Notes for Antigravity AI
+- Follow schema exactly.
+- Do NOT create a backend server.
+- Treat vocabulary and grammar as static data.
+
+12. Final Instruction Prompt for AI
+"Build a hybrid language learning app called 'LingoVault'. Use Firebase Authentication and Cloud Firestore for all persistent user data, streaks, and progress. All vocabulary, grammar rules, and sentence templates must remain completely hardcoded (not fetched from a DB). Implement SRS, sentence builder, translation exercises, streak tracking, and XP system exactly as described in the documentation using Firebase. No other backend or content API usage is allowed."
