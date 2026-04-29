@@ -1,0 +1,65 @@
+============================================================
+           AI USAGE DECLARATION
+============================================================
+
+Name: ZAYED MASUM
+Student ID: 22101461
+Assignment: Final Project
+Date: 29 April 2026
+
+------------------------------------------------------------
+1. AI TOOLS USED (check all that apply)
+------------------------------------------------------------
+[ ] None
+[ ] ChatGPT
+[ ] GitHub Copilot
+[x] Google Gemini
+[ ] Claude
+[ ] Cursor
+[ ] Other: ________________
+
+------------------------------------------------------------
+2. PURPOSE OF AI USE (check all that apply)
+------------------------------------------------------------
+[x] Learning/understanding concepts
+[x] Debugging my code
+[x] Generating code snippets
+[ ] Writing text content
+[x] Design/styling ideas
+[ ] Image generation
+[ ] Other: ________________
+
+------------------------------------------------------------
+3. DESCRIPTION OF AI USE
+------------------------------------------------------------
+Briefly describe what you used AI for and how:
+
+I used Google Gemini as an AI coding assistant to help build the LingoVault Flutter application.
+Gemini assisted with setting up the project structure, developing the offline-first SQLite 
+database, migrating to Firebase Cloud Firestore for synchronization, creating UI screens 
+(Login, Dashboard, SRS, Chat, Friends), implementing the backend Node.js server, and 
+debugging various issues throughout the development process.
+------------------------------------------------------------
+4. AI-ASSISTED SECTIONS
+------------------------------------------------------------
+List specific files/sections where AI helped significantly:
+
+File: lib/screens/*.dart Section: UI Design and State Management
+File: lib/services/*.dart Section: Firebase and SQLite Database Integration
+File: e489final_server/* Section: Backend API and XP Synchronization
+
+------------------------------------------------------------
+5. DECLARATION
+------------------------------------------------------------
+I declare that:
+- This disclosure is complete and accurate
+- I understand all code in my submission
+- I can explain and modify my work if asked
+- I take full responsibility for my submission
+
+Signature: ZAYED MASUM
+Date: 29 April 2026
+
+============================================================
+Save as: docs/AI_Declaration.txt
+============================================================
