@@ -5,7 +5,7 @@
 Name: ZAYED MASUM
 Student ID: 22101461
 Assignment: Final Project
-Date: 29 April 2026
+Date: 25 April 2026
 
 ------------------------------------------------------------
 1. AI TOOLS USED (check all that apply)
@@ -35,8 +35,7 @@ Date: 29 April 2026
 Briefly describe what you used AI for and how:
 
 I used Google Gemini as an AI coding assistant to help build the LingoVault Flutter application.
-Gemini assisted with setting up the project structure, developing the offline-first SQLite 
-database, migrating to Firebase Cloud Firestore for synchronization, creating UI screens 
+Gemini assisted with setting up the project structure, creating UI screens 
 (Login, Dashboard, SRS, Chat, Friends), implementing the backend Node.js server, and 
 debugging various issues throughout the development process.
 ------------------------------------------------------------
@@ -45,7 +44,7 @@ debugging various issues throughout the development process.
 List specific files/sections where AI helped significantly:
 
 File: lib/screens/*.dart Section: UI Design and State Management
-File: lib/services/*.dart Section: Firebase and SQLite Database Integration
+
 File: e489final_server/* Section: Backend API and XP Synchronization
 
 ------------------------------------------------------------
@@ -58,7 +57,7 @@ I declare that:
 - I take full responsibility for my submission
 
 Signature: ZAYED MASUM
-Date: 29 April 2026
+Date: 25 April 2026
 
 ============================================================
 Save as: docs/AI_Declaration.txt
