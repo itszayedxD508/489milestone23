@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import '../services/session_service.dart';
-import '../services/user_service.dart';
 import '../data/static_data.dart';
+import 'package:provider/provider.dart';
+import '../providers/auth_provider.dart';
 import 'results_screen.dart';
 
 class TranslationScreen extends StatefulWidget {
@@ -14,7 +15,6 @@ class TranslationScreen extends StatefulWidget {
 
 class _TranslationScreenState extends State<TranslationScreen> {
   final SessionService _sessionService = SessionService();
-  final UserService _userService = UserService();
 
   final List<Map<String, dynamic>> _queue = List.from(StaticData.translations)
     ..shuffle();
@@ -104,10 +104,9 @@ class _TranslationScreenState extends State<TranslationScreen> {
         _sessionId!,
         _xpEarned,
       );
-      final user = await _userService.getCurrentUser();
-      if (user != null) {
-        await _userService.addXp(user, _xpEarned);
-      }
+
+      if (!mounted) return;
+      await context.read<AuthProvider>().refreshUser();
 
       if (mounted) {
         Navigator.of(context).pushReplacement(

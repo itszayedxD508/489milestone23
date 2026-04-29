@@ -1,27 +1,28 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:flutter/foundation.dart';
+import 'dart:io' show Platform;
 import '../models/models.dart';
 import 'package:intl/intl.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class StreakService {
   final DateFormat _dateFormat = DateFormat('yyyy-MM-dd');
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  String get _baseUrl {
+    if (kIsWeb)
+      return 'http://localhost:3000';
+    else if (Platform.isAndroid)
+      return 'http://10.0.2.2:3000';
+    else
+      return 'http://localhost:3000';
+  }
 
   Future<StreakTracking> getOrCreateStreak(String userId) async {
-    final docRef = _firestore
-        .collection('users')
-        .doc(userId)
-        .collection('streak_tracking')
-        .doc('current');
-
-    final snapshot = await docRef.get();
-    if (snapshot.exists && snapshot.data() != null) {
-      return StreakTracking.fromMap(snapshot.data()!);
-    } else {
-      final docId = docRef.id;
-      final streak = StreakTracking(id: docId, userId: userId);
-      await docRef.set(streak.toMap());
-      return streak;
+    final response = await http.get(Uri.parse('$_baseUrl/streaks/$userId'));
+    if (response.statusCode == 200) {
+      return StreakTracking.fromMap(jsonDecode(response.body));
     }
+    return StreakTracking(userId: userId);
   }
 
   Future<StreakTracking> updateStreakOnLogin(String userId) async {
@@ -59,13 +60,15 @@ class StreakService {
       lastActivityDate: today,
     );
 
-    await _firestore
-        .collection('users')
-        .doc(userId)
-        .collection('streak_tracking')
-        .doc('current')
-        .update(updatedStreak.toMap());
+    final response = await http.put(
+      Uri.parse('$_baseUrl/streaks/$userId'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(updatedStreak.toMap()),
+    );
 
+    if (response.statusCode == 200) {
+      return StreakTracking.fromMap(jsonDecode(response.body));
+    }
     return updatedStreak;
   }
 }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import '../services/srs_service.dart';
 import '../services/session_service.dart';
-import '../services/user_service.dart';
+import 'package:provider/provider.dart';
+import '../providers/auth_provider.dart';
 import 'results_screen.dart';
 
 class SRSScreen extends StatefulWidget {
@@ -15,7 +16,6 @@ class SRSScreen extends StatefulWidget {
 class _SRSScreenState extends State<SRSScreen> {
   final SRSService _srsService = SRSService();
   final SessionService _sessionService = SessionService();
-  final UserService _userService = UserService();
 
   List<Map<String, dynamic>> _queue = [];
   bool _loading = true;
@@ -71,10 +71,9 @@ class _SRSScreenState extends State<SRSScreen> {
         _sessionId!,
         _xpEarned,
       );
-      final user = await _userService.getCurrentUser();
-      if (user != null) {
-        await _userService.addXp(user, _xpEarned);
-      }
+
+      if (!mounted) return;
+      await context.read<AuthProvider>().refreshUser();
 
       if (mounted) {
         Navigator.of(context).pushReplacement(

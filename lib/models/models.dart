@@ -1,18 +1,37 @@
 class User {
   final String? id;
   final String username;
+  final String? email;
   final int totalXp;
+  final List<String> friends;
+  final List<String> friendRequests;
 
-  User({this.id, required this.username, this.totalXp = 0});
+  User({
+    this.id,
+    required this.username,
+    this.email,
+    this.totalXp = 0,
+    this.friends = const [],
+    this.friendRequests = const [],
+  });
 
   Map<String, dynamic> toMap() => {
     'id': id,
     'username': username,
+    'email': email,
     'total_xp': totalXp,
+    'friends': friends,
+    'friendRequests': friendRequests,
   };
 
-  factory User.fromMap(Map<String, dynamic> map) =>
-      User(id: map['id'], username: map['username'], totalXp: map['total_xp']);
+  factory User.fromMap(Map<String, dynamic> map) => User(
+    id: map['id'],
+    username: map['username'] ?? '',
+    email: map['email'],
+    totalXp: (map['total_xp'] ?? 0).toInt(),
+    friends: List<String>.from(map['friends'] ?? []),
+    friendRequests: List<String>.from(map['friendRequests'] ?? []),
+  );
 }
 
 class SRSCard {
@@ -227,4 +246,36 @@ class UserWordProgress {
         timesCorrect: map['times_correct'] ?? 0,
         masteryLevel: (map['mastery_level'] ?? 0.0).toDouble(),
       );
+}
+
+class ChatMessage {
+  final String? id;
+  final String senderId;
+  final String receiverId;
+  final String text;
+  final String? timestamp;
+
+  ChatMessage({
+    this.id,
+    required this.senderId,
+    required this.receiverId,
+    required this.text,
+    this.timestamp,
+  });
+
+  Map<String, dynamic> toMap() => {
+    'id': id,
+    'sender_id': senderId,
+    'receiver_id': receiverId,
+    'text': text,
+    'timestamp': timestamp,
+  };
+
+  factory ChatMessage.fromMap(Map<String, dynamic> map) => ChatMessage(
+    id: map['id'],
+    senderId: map['sender_id'],
+    receiverId: map['receiver_id'],
+    text: map['text'],
+    timestamp: map['timestamp'],
+  );
 }
